@@ -1,0 +1,22 @@
+CC=g++
+CFLAGS =-g -std=c++11 -Wall `pkg-config --cflags MLV`
+LDFLAGS = `pkg-config --libs-only-other --libs-only-L MLV`
+LDLIBS = `pkg-config --libs-only-l MLV`
+
+default: maintest
+
+maintest: fonctions.o maintest.o test.o
+	$(CC) $(CFLAGS) -o maintest fonctions.o test.o maintest.o $(LDFLAGS) $(LDLIBS)
+
+fonctions.o: fonctions.cpp projet.h
+	$(CC) $(CFLAGS) -c fonctions.cpp
+
+test.o: test.cpp projet.h
+	$(CC) $(CFLAGS) -c test.cpp
+
+maintest.o: maintest.cpp projet.h
+	$(CC) $(CFLAGS) -c maintest.cpp
+
+clean:
+	$(RM) *.o*
+
